@@ -1,13 +1,12 @@
 import axios from 'axios';
-export function getSick() {
-  axios({
-    method: 'get',
-    url: 'http://localhost:4000/sick'
-  })
-    .then(function (res) {
-      console.log('res', res.data);
-    })
-    .catch(function (error) {
-      console.log('error', error);
-    });
+export async function getSick() {
+  try {
+    const response = await axios.get('http://localhost:4000/sick');
+
+    return response.data;
+  } catch (error) {
+    console.log('error', error);
+
+    throw error;
+  }
 }

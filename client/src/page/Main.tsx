@@ -1,9 +1,9 @@
 import React from 'react';
-import Search from '../components/Search';
+import SearchBar from '../components/SearchBar';
 export default function Main() {
   return (
     <div>
-      <Search />
+      <SearchBar />
     </div>
   );
 }
