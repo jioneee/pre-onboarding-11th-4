@@ -12,7 +12,9 @@ export function DropDown({ sickData, search }: DropsDownProps) {
   return (
     <>
       <div>
-        {filteredData.length > 0 && (
+        {filteredData.length > 0 ? (
+          <div>검색어 없음</div>
+        ) : (
           <div>
             {filteredData.map((item) => (
               <div key={item.sickCd}>{item.sickNm}</div>
@@ -20,7 +22,6 @@ export function DropDown({ sickData, search }: DropsDownProps) {
           </div>
         )}
       </div>
-      ;
     </>
   );
 }

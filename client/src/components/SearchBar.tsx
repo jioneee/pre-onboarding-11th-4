@@ -10,6 +10,7 @@ export interface SickData {
 export default function SearchBar() {
   const [search, setSearch] = useState('');
   const [sickData, setSickData] = useState<SickData[]>([]);
+  const [searchToggle, setSearchToggle] = useState(false);
   const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -28,6 +29,11 @@ export default function SearchBar() {
     getData();
   }, []);
 
+  const onClickToggle = () => {
+    setSearchToggle(!searchToggle);
+    console.log('토글');
+  };
+
   return (
     <>
       검색창
@@ -35,10 +41,11 @@ export default function SearchBar() {
         type='text'
         value={search}
         onChange={onSearchHandler}
+        onClick={onClickToggle}
         placeholder='질환명을 입력해주세요'
       />
       <button type='submit'>검색</button>
-      <DropDown sickData={sickData} search={search} />
+      {!searchToggle && <DropDown sickData={sickData} search={search} />}
       {sickData.length > 0 && (
         <div>
           <p>Sick Code: {sickData[0].sickCd}</p>
