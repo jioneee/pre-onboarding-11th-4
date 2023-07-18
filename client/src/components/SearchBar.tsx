@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-// import axios from 'axios';
 import { getSick } from '../api/sickApi';
+import { DropDown } from './DropDown';
 
-interface SickData {
+export interface SickData {
   sickCd: string;
   sickNm: string;
 }
 
 export default function SearchBar() {
   const [search, setSearch] = useState('');
-  const [sickData, setSickData] = useState<SickData | null>(null);
+  const [sickData, setSickData] = useState<SickData[]>([]);
   const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -18,7 +18,6 @@ export default function SearchBar() {
     const getData = async () => {
       try {
         const response = await getSick();
-
         console.log(response);
         setSickData(response);
       } catch (error) {
@@ -39,11 +38,11 @@ export default function SearchBar() {
         placeholder='질환명을 입력해주세요'
       />
       <button type='submit'>검색</button>
-      {sickData && (
+      <DropDown sickData={sickData} search={search} />
+      {sickData.length > 0 && (
         <div>
-          <h2>Sick Data:</h2>
-          <p>Sick Code: {sickData.sickCd}</p>
-          <p>Sick Name: {sickData.sickNm}</p>
+          <p>Sick Code: {sickData[0].sickCd}</p>
+          <p>Sick Name: {sickData[0].sickNm}</p>
         </div>
       )}
     </>
