@@ -65,7 +65,7 @@ export function DropDown({
   return (
     <>
       <Container>
-        {firstTimeSearch && search.length === 0 ? (
+        {firstTimeSearch ? (
           <>
             <TextTitle>검색어 없음</TextTitle>
           </>
@@ -79,7 +79,7 @@ export function DropDown({
             />
 
             <RecentSearchContainer>
-              <TextTitle>최근검색어</TextTitle>
+              <TextTitle>최근 검색어</TextTitle>
 
               {parsedRecentSearches.map((recent: string, index: number) => (
                 <div
