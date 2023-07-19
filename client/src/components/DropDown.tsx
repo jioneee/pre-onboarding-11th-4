@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { SickData } from './SearchBar';
 
 interface DropsDownProps {
@@ -11,8 +12,8 @@ export function DropDown({ sickData, search }: DropsDownProps) {
   );
   return (
     <>
-      <div>
-        {filteredData.length > 0 ? (
+      <Container>
+        {search.length === 0 ? (
           <div>검색어 없음</div>
         ) : (
           <div>
@@ -21,7 +22,13 @@ export function DropDown({ sickData, search }: DropsDownProps) {
             ))}
           </div>
         )}
-      </div>
+      </Container>
     </>
   );
 }
+
+const Container = styled.div`
+  box-sizing: border-box;
+  border: 1px solid;
+  width: 250px;
+`;
