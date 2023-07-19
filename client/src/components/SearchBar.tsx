@@ -76,9 +76,9 @@ export default function SearchBar() {
           onKeyUp={onKeyUp}
           placeholder='질환명을 입력해주세요.'
         />
-        <button type='submit' onClick={onClickSearch}>
+        <SearchButton type='submit' onClick={onClickSearch}>
           검색
-        </button>
+        </SearchButton>
       </SearchBarContainer>
       {!searchToggle && (
         <DropDown
@@ -108,16 +108,28 @@ const SearchBarContainer = styled.div`
   background-color: #ffffff;
   width: 490px;
   height: 72.9px;
-  padding: 0px 8px 0px 0px;
+  padding: 0px 0px 0px 0px;
 `;
 
 const Input = styled.input`
   width: 396.8px;
   height: 22.7px;
+  outline: none;
   border: none;
   align-items: center;
   padding: 1px 25px 1px 2px;
   font-size: large;
   font-weight: 400;
   letter-spacing: -0.018em;
+`;
+
+const SearchButton = styled.button`
+  height: 48px;
+  width: 48px;
+  color: #ffffff;
+  font-weight: 700;
+  background-color: #2b2bd7;
+  border-radius: 100%;
+  border: none;
+  margin-right: 0%;
 `;

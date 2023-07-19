@@ -1,7 +1,6 @@
 import axios from 'axios';
-let apiCallCount = 0;
+
 export async function getSick() {
-  apiCallCount++;
   const cachedData = localStorage.getItem('sickData');
   if (cachedData) {
     const { data, expireTime } = JSON.parse(cachedData);
@@ -18,7 +17,7 @@ export async function getSick() {
       'sickData',
       JSON.stringify({ data: response.data, expireTime })
     );
-    console.info(`calling api:${apiCallCount}`);
+    console.info('calling api');
     return response.data;
   } catch (error) {
     console.log('error', error);
