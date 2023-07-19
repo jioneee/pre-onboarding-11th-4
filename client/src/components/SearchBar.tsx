@@ -21,6 +21,8 @@ export default function SearchBar() {
     setFirstTimeSearch(false);
   };
   useEffect(() => {
+    const timer = 500;
+    let debounceTimer: NodeJS.Timeout | null = null;
     const getData = async () => {
       try {
         const response = await getSick();
@@ -31,8 +33,21 @@ export default function SearchBar() {
         throw error;
       }
     };
-    getData();
-  }, []);
+    if (search && !firstTimeSearch) {
+      if (debounceTimer) {
+        clearTimeout(timer);
+      }
+      debounceTimer = setTimeout(getData, timer);
+    } else {
+      setSickData([]);
+    }
+
+    return () => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+    };
+  }, [search, firstTimeSearch]);
 
   const onClickToggle = () => {
     setSearchToggle(!searchToggle);
