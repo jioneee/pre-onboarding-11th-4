@@ -10,7 +10,7 @@
 
 ```tsx
 <Container>
-        {firstTimeSearch && search.length === 0 ? (
+        {firstTimeSearch ? (
           <>
             <TextTitle>검색어 없음</TextTitle>
           </>
@@ -24,7 +24,7 @@
             />
 
             <RecentSearchContainer>
-              <TextTitle>최근검색어</TextTitle>
+              <TextTitle>최근 검색어</TextTitle>
 
               {parsedRecentSearches.map((recent: string, index: number) => (
                 <div
@@ -64,7 +64,7 @@
     - 캐싱 기능을 제공하는 라이브러리 사용 금지(React-Query 등)
     - 캐싱을 어떻게 기술했는지 / expire time을 구현
     
-    → localstorage에 저장하여 추천 검색으로 나타나도록 함
+    → SearchBar.tsx : localstorage에 저장하여 최근 검색으로 나타나도록 함
     
 
 ```tsx
@@ -186,6 +186,7 @@ const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     }
   };
 ```
+
 
 ### 파일구조
 
