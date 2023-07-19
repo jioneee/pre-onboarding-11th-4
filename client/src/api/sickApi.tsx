@@ -5,7 +5,6 @@ export async function getSick() {
   if (cachedData) {
     const { data, expireTime } = JSON.parse(cachedData);
     if (expireTime > Date.now()) {
-      console.log('cashing');
       return data;
     }
   }

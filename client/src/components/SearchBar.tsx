@@ -26,7 +26,6 @@ export default function SearchBar() {
     const getData = async () => {
       try {
         const response = await getSick();
-        console.log(response);
         setSickData(response);
       } catch (error) {
         console.log('error', error);
