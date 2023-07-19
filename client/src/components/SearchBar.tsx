@@ -14,9 +14,11 @@ export default function SearchBar() {
   const [search, setSearch] = useState('');
   const [sickData, setSickData] = useState<SickData[]>([]);
   const [searchToggle, setSearchToggle] = useState(false);
+  const [firstTimeSearch, setFirstTimeSearch] = useState(true);
   const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
+    setFirstTimeSearch(false);
   };
   useEffect(() => {
     const getData = async () => {
@@ -35,13 +37,25 @@ export default function SearchBar() {
   const onClickToggle = () => {
     setSearchToggle(!searchToggle);
   };
-  const onKeyUp = (event: any) => {
+  const onKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.keyCode === 13) {
-      navigate('/search');
+      onClickSearch();
     }
   };
   const onClickSearch = () => {
     if (search.length !== 0) {
+      const recentSearches = localStorage.getItem('recentSearches');
+      const parsedRecentSearches = recentSearches
+        ? JSON.parse(recentSearches)
+        : [];
+      const updatedRecentSearches = [...parsedRecentSearches, search];
+
+      localStorage.setItem(
+        'recentSearches',
+        JSON.stringify(updatedRecentSearches)
+      );
+
+      setSearchToggle(true);
       navigate('/search');
     }
   };
@@ -63,7 +77,12 @@ export default function SearchBar() {
         </button>
       </SearchBarContainer>
       {!searchToggle && (
-        <DropDown sickData={sickData} search={search} setSearch={setSearch} />
+        <DropDown
+          sickData={sickData}
+          search={search}
+          setSearch={setSearch}
+          firstTimeSearch={firstTimeSearch}
+        />
       )}
       {sickData.length > 0 && (
         <div>
