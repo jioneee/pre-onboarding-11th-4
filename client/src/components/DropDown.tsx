@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { SickData } from './SearchBar';
 
 interface DropsDownProps {
@@ -14,12 +15,49 @@ export function DropDown({
   setSearch,
   firstTimeSearch
 }: DropsDownProps) {
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const filteredData = sickData.filter((item) =>
     item.sickNm.toLowerCase().startsWith(search.toLowerCase())
   );
   const handleRecentSearch = (recentSearch: string) => {
     setSearch(recentSearch);
     console.log('recent', recentSearch);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (filteredData.length === 0) return;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        setFocusedIndex((prevIndex) =>
+          prevIndex === null || prevIndex === filteredData.length - 1
+            ? 0
+            : prevIndex + 1
+        );
+        break;
+      case 'ArrowUp':
+        setFocusedIndex((prevIndex) =>
+          prevIndex === null || prevIndex === 0
+            ? filteredData.length - 1
+            : prevIndex - 1
+        );
+        break;
+      case 'Enter':
+        if (
+          focusedIndex !== null &&
+          focusedIndex >= 0 &&
+          focusedIndex < filteredData.length
+        ) {
+          setSearch(filteredData[focusedIndex].sickNm);
+          setFocusedIndex(null);
+        }
+        break;
+      default:
+        break;
+    }
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+    }
   };
   const recentSearches = localStorage.getItem('recentSearches');
   const parsedRecentSearches = recentSearches ? JSON.parse(recentSearches) : [];
@@ -37,13 +75,21 @@ export function DropDown({
               type='text'
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
 
             <RecentSearchContainer>
               <TextTitle>최근검색어</TextTitle>
 
-              {parsedRecentSearches.map((recent: string) => (
-                <div key={recent} onClick={() => handleRecentSearch(recent)}>
+              {parsedRecentSearches.map((recent: string, index: number) => (
+                <div
+                  key={recent}
+                  onClick={() => handleRecentSearch(recent)}
+                  style={{
+                    background:
+                      index === focusedIndex ? '#e1e1e1' : 'transparent'
+                  }}
+                >
                   {recent}
                 </div>
               ))}
@@ -51,8 +97,16 @@ export function DropDown({
             {search.length !== 0 ? (
               <FilteredContainer>
                 <TextTitle>추천 검색어</TextTitle>
-                {filteredData.map((item) => (
-                  <div key={item.sickCd}>{item.sickNm}</div>
+                {filteredData.map((item, index: number) => (
+                  <div
+                    key={item.sickCd}
+                    style={{
+                      background:
+                        index === focusedIndex ? '#e1e1e1' : 'transparent'
+                    }}
+                  >
+                    {item.sickNm}
+                  </div>
                 ))}
               </FilteredContainer>
             ) : null}
