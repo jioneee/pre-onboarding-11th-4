@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { useState } from 'react';
 import { SickData } from './SearchBar';
 
 interface DropsDownProps {
@@ -30,7 +29,7 @@ export function DropDown({
       <Container>
         {firstTimeSearch && search.length === 0 ? (
           <>
-            <div>검색어 없음</div>
+            <TextTitle>검색어 없음</TextTitle>
           </>
         ) : (
           <div>
@@ -41,6 +40,8 @@ export function DropDown({
             />
 
             <RecentSearchContainer>
+              <TextTitle>최근검색어</TextTitle>
+
               {parsedRecentSearches.map((recent: string) => (
                 <div key={recent} onClick={() => handleRecentSearch(recent)}>
                   {recent}
@@ -49,6 +50,7 @@ export function DropDown({
             </RecentSearchContainer>
             {search.length !== 0 ? (
               <FilteredContainer>
+                <TextTitle>추천 검색어</TextTitle>
                 {filteredData.map((item) => (
                   <div key={item.sickCd}>{item.sickNm}</div>
                 ))}
@@ -64,8 +66,16 @@ export function DropDown({
 const Container = styled.div`
   box-sizing: border-box;
   border: 1px solid;
-  width: 250px;
+  border-color: #ffffff;
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 490px;
   min-height: 200px;
+  margin: 5px auto;
+  padding: 10px;
+  text-align: left;
+  font-size: medium;
+  font-weight: lighter;
 `;
 const Input = styled.input`
   border: none;
@@ -75,34 +85,12 @@ const Input = styled.input`
 const FilteredContainer = styled.div`
   margin: 10px auto;
 `;
-const RecentSearchContainer = styled.div``;
+const RecentSearchContainer = styled.div`
+  margin: 20px auto;
+`;
 
-{
-  /* <Container>
-{search.length === 0 ? (
-  <>
-    <div>검색어 없음</div>
-    <RecentSearchContainer>
-      {parsedRecentSearches.map((recent: string) => (
-        <div key={recent} onClick={() => handleRecentSearch(recent)}>
-          {recent}
-        </div>
-      ))}
-    </RecentSearchContainer>
-  </>
-) : (
-  <div>
-    <Input
-      type='text'
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-    />
-    <FilteredContainer>
-      {filteredData.map((item) => (
-        <div key={item.sickCd}>{item.sickNm}</div>
-      ))}
-    </FilteredContainer>
-  </div>
-)}
-</Container> */
-}
+const TextTitle = styled.div`
+  font-weight: bold;
+  font-size: large;
+  text-align: left;
+`;

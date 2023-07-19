@@ -62,7 +62,11 @@ export default function SearchBar() {
 
   return (
     <SearchContainer>
-      검색창
+      <H2>
+        국내 모든 임상시험 검색하고
+        <br></br>
+        온라인으로 참여하기
+      </H2>
       <SearchBarContainer>
         <Input
           type='text'
@@ -70,7 +74,7 @@ export default function SearchBar() {
           onChange={onSearchHandler}
           onClick={onClickToggle}
           onKeyUp={onKeyUp}
-          placeholder='질환명을 입력해주세요'
+          placeholder='질환명을 입력해주세요.'
         />
         <button type='submit' onClick={onClickSearch}>
           검색
@@ -84,12 +88,6 @@ export default function SearchBar() {
           firstTimeSearch={firstTimeSearch}
         />
       )}
-      {sickData.length > 0 && (
-        <div>
-          <p>Sick Code: {sickData[0].sickCd}</p>
-          <p>Sick Name: {sickData[0].sickNm}</p>
-        </div>
-      )}
     </SearchContainer>
   );
 }
@@ -97,14 +95,29 @@ export default function SearchBar() {
 const SearchContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  align-items: center;
+  margin: 10px auto;
+`;
+const H2 = styled.h2`
+  font-size: 34px;
 `;
 const SearchBarContainer = styled.div`
-  width: 300px;
+  box-sizing: border-box;
+  border: 2px solid;
+  border-radius: 42px;
+  border-color: #ffffff;
+  background-color: #ffffff;
+  width: 490px;
+  height: 72.9px;
+  padding: 0px 8px 0px 0px;
 `;
 
 const Input = styled.input`
-  width: 250px;
+  width: 396.8px;
+  height: 22.7px;
+  border: none;
   align-items: center;
+  padding: 1px 25px 1px 2px;
+  font-size: large;
+  font-weight: 400;
+  letter-spacing: -0.018em;
 `;
