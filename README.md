@@ -8,6 +8,11 @@
 
 →DropDown.tsx : 최근 검색한 내용이 없을 경우 검색어 없음 나타나게 함
 
+
+
+https://github.com/jioneee/pre-onboarding-11th-4/assets/107476522/62638bbc-fa6a-4ed9-9723-158c7744fc63
+
+
 ```tsx
 <Container>
         {firstTimeSearch ? (
